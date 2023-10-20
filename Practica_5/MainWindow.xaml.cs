@@ -35,7 +35,15 @@ namespace Practica_5
 
         private void click_enter(object sender, RoutedEventArgs e)
         {
-
+            int res = ad.Login(txtUser.Text, txtPsw.Password);
+            if(res == 0)
+            {
+                MessageBox.Show("Has iniciado sesión");
+            }
+            else
+            {
+                MessageBox.Show("Error en el inicio de sesión");
+            }
         }
     }
 }

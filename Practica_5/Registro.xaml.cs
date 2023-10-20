@@ -53,6 +53,14 @@ namespace Practica_5
                     MessageBox.Show("Introducido con exito");
                     this.Close();
                 }
+                else if (res == -1)
+                {
+                    MessageBox.Show("No hay id de dirección");
+                }
+                else if (res == -2)
+                {
+                    MessageBox.Show("Ya existe ese nombre de usuario");
+                }
                 else
                 {
                     MessageBox.Show("Ha ocurrido un error");

@@ -9,6 +9,7 @@ using MySql.Data.MySqlClient;
 using System.Windows.Media;
 using System.Windows.Controls;
 using System.Security.Cryptography;
+using System.Reflection.Metadata;
 
 namespace Practica_5
 {
@@ -101,7 +102,7 @@ namespace Practica_5
     
     public int AltaEmpleado(string first_name, string last_name, string email, int store_id, string username, string password)
     {
-        int resultado = -98;
+        int resultado = -97;
         try
         {
             _cmd = new MySqlCommand();
@@ -126,9 +127,9 @@ namespace Practica_5
             _cmd.Parameters.AddWithValue("_username", username);
             _cmd.Parameters["_username"].Direction = ParameterDirection.Input;
 
-                password = CreateMD5(password);
+            string passwordHash = CreateMD5(password).Substring(0, 20);
 
-            _cmd.Parameters.AddWithValue("_password", password);
+            _cmd.Parameters.AddWithValue("_password", passwordHash);      
             _cmd.Parameters["_password"].Direction = ParameterDirection.Input;
 
             //Parametros Output
@@ -149,6 +150,38 @@ namespace Practica_5
         }
     }
 
+    public int Login(string username, string password)
+        {
+            int resultado = -96;
+            try
+            {
+                
+                _cmd = new MySqlCommand();
+                _cmd.Connection = _conn;
+                _cmd.CommandType = CommandType.StoredProcedure;
+                _cmd.CommandText = "Login";
+
+                _cmd.Parameters.AddWithValue("_username", username);
+                _cmd.Parameters["_username"].Direction = ParameterDirection.Input;
+
+                string pswHash = CreateMD5(password).Substring(0, 20);
+
+                _cmd.Parameters.AddWithValue("_password", pswHash);
+                _cmd.Parameters["_password"].Direction = ParameterDirection.Input;
+
+                _cmd.Parameters.Add(new MySqlParameter("_res", MySqlDbType.Int32));
+                _cmd.Parameters["_res"].Direction = ParameterDirection.Output;
+
+                _cmd.ExecuteNonQuery();
+
+                resultado = (int)_cmd.Parameters["_res"].Value;
+                return resultado;
+            }catch(Exception ex)
+            {
+                MessageBox.Show("Error en el login");
+                return resultado;
+            }
+        }
     public string CreateMD5(string password)
         {
             using (System.Security.Cryptography.MD5 md5 = System.Security.Cryptography.MD5.Create())
