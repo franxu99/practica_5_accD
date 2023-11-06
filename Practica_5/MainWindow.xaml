@@ -5,20 +5,18 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Practica_5"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
+        Title="MainWindow" Height="{Binding ResY,Mode=TwoWay}" Width="{Binding ResX,Mode=TwoWay}">
     <Window.Background>
         <ImageBrush ImageSource="/fondo.png" Opacity="0.5"/>
     </Window.Background>
     <Grid>
         <Grid.RowDefinitions>
             <RowDefinition Height="*" />
-            <RowDefinition Height="3*" />
-            <RowDefinition Height="*" />
+            <RowDefinition Height="4*" />
         </Grid.RowDefinitions>
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="*" />
             <ColumnDefinition Width="3*" />
-            <ColumnDefinition Width="*" />
         </Grid.ColumnDefinitions>
         <StackPanel Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center">
             <TextBlock Text="Sakila Movies" FontSize="48" FontFamily="Broadway" Foreground="#FFFF7D40"/>
@@ -59,7 +57,13 @@
         </Grid>
         <StackPanel Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center" Margin="10" >
             <TextBlock Text="Nº Películas"  FontSize="20" TextDecorations="Underline" Foreground="#FFFF7D40"/>
-            <TextBlock x:Name="numFilm" Foreground="White" FontSize="20"/>
+            <TextBlock x:Name="numFilm" Text="{Binding NumeroPeliculas}" Foreground="White" FontSize="20"/>
+            <TextBlock x:Name="tb_sumador" Text="{Binding Sumador}" HorizontalAlignment="Center" FontSize="40" Foreground="#FF0B840D"/>
+            <Button Content="Sumar +1" FontSize="20" Margin="10" Click="increment"/>
+            <TextBlock Text="Resolucion Width:" FontFamily="Kristen ITC" FontSize="15"/>
+            <TextBox Text="{Binding ResX,Mode=TwoWay}" FontSize="20" Margin="10"/>
+            <TextBlock Text="Resolucion Height:" FontFamily="Kristen ITC" FontSize="15"/>
+            <TextBox Text="{Binding ResY,Mode=TwoWay}" FontSize="20" Margin="10"/>
         </StackPanel>
     </Grid>
 </Window>

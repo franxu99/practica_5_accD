@@ -109,7 +109,7 @@ namespace Practica_5 {
                 return;
             }
             _contentLoaded = true;
-            System.Uri resourceLocater = new System.Uri("/Practica_5;V1.0.0.0;component/registro.xaml", System.UriKind.Relative);
+            System.Uri resourceLocater = new System.Uri("/Practica_5;component/registro.xaml", System.UriKind.Relative);
             
             #line 1 "..\..\..\Registro.xaml"
             System.Windows.Application.LoadComponent(this, resourceLocater);

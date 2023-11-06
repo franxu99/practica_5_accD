@@ -12,6 +12,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace Practica_5
 {
@@ -21,10 +22,23 @@ namespace Practica_5
     public partial class MainWindow : Window
     {
         AccesoDatos ad = new AccesoDatos();
+        SakilaManager sm = new SakilaManager();
         public MainWindow()
         {
             InitializeComponent();
-            numFilm.Text = ad.DameNumeroPeliculas().ToString();
+            
+            DispatcherTimer timer = new DispatcherTimer();  //DispatcherTimer realiza algo cada determinado tiempo
+            timer.Interval = TimeSpan.FromSeconds(1);       
+            timer.Tick += ActualizarNumeroPeliculas_tick;
+            timer.Start();
+
+            DataContext = sm;   //DataContext es un puntero hacia el sm
+            
+        }
+
+        private void ActualizarNumeroPeliculas_tick(object sender, EventArgs e)
+        {
+            sm.ActualizarNumeroPeliculas();     //cada 1 seg se realiza este metodo que se encuentra en sm y nos devuelve el nº peliculas
         }
 
         private void click_register(object sender, RoutedEventArgs e)
@@ -44,6 +58,11 @@ namespace Practica_5
             {
                 MessageBox.Show("Error en el inicio de sesión");
             }
+        }
+
+        private void increment(object sender, RoutedEventArgs e)
+        {
+            sm.Sumador++;
         }
     }
 }
